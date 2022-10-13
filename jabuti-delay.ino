@@ -8,7 +8,7 @@
 #define MotorE_sentido1 9
 #define MotorE_sentido2 6
 
-int pwm, espera;
+int velesq, veldir, meia, completa;
 
 void setup() {
   Serial.begin(9600);
@@ -28,70 +28,67 @@ void setup() {
   analogWrite(MotorD_sentido1, 0);
   analogWrite(MotorD_sentido2, 0);
 
-  pwm = 0;
-  espera = 0;
+  velesq = 0;
+  veldir = 0;
+  meia = 0;
+  completa = 0;
 }
 
 void loop() {
+    velesq = 100;
+    veldir = 100;
+    meia = 380;  //para 100 de velocidade
+    completa = 630; //para 100 de velocidade
 //  Correr(128);
 //  if(digitalRead(SensorDrt) == 1){ //direita liberada
 //    Parar();
-//    RodarDir(255, 300);
-//  }else if (digitalRead(SensorEsq) == 1 && (digitalRead(SensorFrente1) || digitalRead(SensorFrente2)) == 0 && digitalRead(SensorDrt) == 0){ //apenas esquerda liberada
+//    RodarDir(64, 3);
+//  }else if (digitalRead(SensorEsq) == 1 && (digitalRead(SensorFrente1) == 0 || digitalRead(SensorFrente2) == 0)){ //apenas esquerda liberada
 //    Parar();
-//    RodarEsq(255, 300);
-//  }else if((digitalRead(SensorFrente1) || digitalRead(SensorFrente2)) == 0 && digitalRead(SensorEsq) == 0 && digitalRead(SensorDrt) == 0){ //todos bloqueados
+//    RodarEsq(64, 6);
+//  }else if((digitalRead(SensorEsq) == 0){ //todos bloqueados
 //    Parar();
-//    RodarDir(255, 600);
+//    RodarDir(64, 12);
 //  }
-    
-//    Correr(255);
-//    Parar();
-//    Re(255);
-//    Parar();
-//    RodarEsq(255, 300);
-//    Parar();
-//    RodarDir(255, 300);
-
-      Correr(205);
-      if(digitalRead(SensorFrente1) == 0 && digitalRead(SensorFrente2) == 0){
-        Re(255);
-        Parar();
-        Parar();
-        RodarDir(255, 550);
-        Parar();
-      }
+      Correr(velesq, veldir);
+//      if(digitalRead(SensorFrente1) == 0 && digitalRead(SensorFrente2) == 0){
+//        Parar();
+//        Re(velesq, veldir);
+//        Parar();
+//        RodarDir(velesq, veldir, completa);
+//        Parar();
+//      }
 }
 
 
-void Correr(int pwm){
-  analogWrite(MotorE_sentido1, pwm);
+void Correr(int pwm1,int pwm2){
+  analogWrite(MotorE_sentido1, pwm1);
   analogWrite(MotorE_sentido2, 0);
-  analogWrite(MotorD_sentido1, pwm);
+  analogWrite(MotorD_sentido1, pwm2);
   analogWrite(MotorD_sentido2, 0);
-  delay(500);
+//  delay(500);
 }
 
-void Re(int pwm){
+void Re(int pwm1,int pwm2){
   analogWrite(MotorE_sentido1, 0);
-  analogWrite(MotorE_sentido2, pwm);
+  analogWrite(MotorE_sentido2, pwm1);
   analogWrite(MotorD_sentido1, 0);
-  analogWrite(MotorD_sentido2, pwm);
-  delay(500);
+  analogWrite(MotorD_sentido2, pwm2);
+  delay(300);
 }
 
-void RodarDir(int pwm, int del){
-    analogWrite(MotorE_sentido1, pwm);
+void RodarDir(int pwm1, int pwm2, int del){
+    analogWrite(MotorE_sentido1, pwm1);
     analogWrite(MotorE_sentido2, 0);
     analogWrite(MotorD_sentido1, 0);
-    analogWrite(MotorD_sentido2, pwm);
+    analogWrite(MotorD_sentido2, pwm2);
     delay(del);
 }
 
-void RodarEsq(int pwm, int del){
+void RodarEsq(int pwm1, int pwm2, int del){
     analogWrite(MotorE_sentido1, 0);
-    analogWrite(MotorE_sentido2, pwm);
-    analogWrite(MotorD_sentido1, pwm);
+    analogWrite(MotorE_sentido2, pwm1);
+    analogWrite(MotorD_sentido1, pwm2);
     analogWrite(MotorD_sentido2, 0);
     delay(del);
 }
