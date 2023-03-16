@@ -1,6 +1,6 @@
-#define SensorDrt 7
-#define SensorEsq 5
-#define SensorFrente1 8
+#define SensorDrt 0
+#define SensorEsq 13
+#define SensorFrente 2
 
 #define MotorD_sentido1 11
 #define MotorD_sentido2 10
@@ -18,7 +18,7 @@ void setup() {
   
   pinMode(SensorDrt, INPUT);
   pinMode(SensorEsq, INPUT);
-  pinMode(SensorFrente1, INPUT);
+  pinMode(SensorFrente, INPUT);
 
 /* boas práticas*/
   analogWrite(MotorE_sentido1, 0);
@@ -37,26 +37,26 @@ void loop() {
     veldir = 100;
     meia = 380;  //para 100 de velocidade
     completa = 630; //para 100 de velocidade
-  Correr(128);
-  if(digitalRead(SensorDrt) == 1){ //direita liberada
-    Parar();
-    RodarDir(64, 3);
-  }else if (digitalRead(SensorEsq) == 1 && digitalRead(SensorFrente1) == 0){ //apenas esquerda liberada
-    Parar();
-    RodarEsq(64, 6);
-  }else if((digitalRead(SensorEsq) == 0){ //todos bloqueados
-    Parar();
-    RodarDir(64, 12);
-  }
+//  Correr(128);
+//  if(digitalRead(SensorDrt) == 1){ //direita liberada
+//  Parar();
+//    RodarDir(64, 3);
+//  }else if (digitalRead(SensorEsq) == 1 && digitalRead(SensorFrente) == 0){ //apenas esquerda liberada
+//    Parar();
+//    RodarEsq(64, 6);
+//  }else if((digitalRead(SensorEsq) == 0){ //todos bloqueados
+//    Parar();
+//    RodarDir(64, 12);
+//  }
   
-//      Correr(velesq, veldir);
-//      if(digitalRead(SensorFrente1) == 0 ){
-//        Parar();
-//        Re(velesq, veldir);
-//        Parar();
-//        RodarDir(velesq, veldir, completa);
-//        Parar();
-//      }
+    Correr(velesq, veldir);
+      if(digitalRead(SensorFrente) == 0 ){
+        Parar();
+        Re(velesq, veldir);
+        Parar();
+        RodarDir(velesq, veldir, completa);
+        Parar();
+      }
 
 }
 
